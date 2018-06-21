@@ -5,10 +5,12 @@ import src.Ticket;
 import src.Passenger;
 public class Booker {
 	static Connection conn;	
+	static Connection conn1;
 	public static void getConn() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/irctc","root","root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/irctc","root","root");
+			conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/authority","root","root");
 		}catch(Exception e){
 			System.out.println("init: "+e);
 		}
@@ -109,13 +111,23 @@ public class Booker {
 	synchronized public static boolean register(String name, String mobile, String password, int age) {
 		getConn();
 		Statement stmt;
-		boolean flag=true;;
+		boolean flag=true;
+		ResultSet rs;
 		try{
             if(name==null||mobile==null||password==null||new Integer(age)==null){
                 throw new Exception("null values");
-            }
-            stmt = conn.createStatement();
-            stmt.execute("insert into user " + "values('"+name+"','"+mobile+"',"+age+",'"+password+"');");
+			}
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from user where mobile='"+mobile+"';");
+			if(rs.next()){
+				return false;
+			}
+			
+			stmt.execute("insert into user " + "values('"+name+"','"+mobile+"',"+age+",'"+password+"');");
+			stmt = conn1.createStatement();
+			stmt.execute("insert into users values('"+mobile+"','"+password+"');");
+			stmt.execute("insert into user_roles values('"+mobile+"','user_irctc');");
         }
         catch(Exception e){
         	flag = false;

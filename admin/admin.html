@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Admin</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <button onclick="loadTrain()">add a train</button>
+        <button onclick="getTrains()">view all current trains</button>
+        <div id="adminDiv">
+        </div>
+        <script>
+            function loadTrain(){
+                var xh = new XMLHttpRequest();
+                xh.onreadystatechange = function(){
+                    if(this.readyState==4 && this.status==200){
+                        document.getElementById("adminDiv").innerHTML=this.responseText;
+                    }
+                };
+                xh.open("GET","trainForm.html",true);
+                xh.send();
+            }
+            function getTrains(){
+                var xh = new XMLHttpRequest();
+                xh.onreadystatechange = function(){
+                    if(this.readyState==4 && this.status==200){
+                        document.getElementById("adminDiv").innerHTML=this.responseText;
+                    }
+                };
+                xh.open("GET","getTrains.jsp",true);
+                xh.send();
+            }
+        </script>
+    </body>
+</html>

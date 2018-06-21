@@ -25,13 +25,10 @@
             password = request.getParameter("password");
             age = Integer.parseInt(request.getParameter("age"));
             if(Booker.register(name,mobile,password,age)){
-            	RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-            	rd.forward(request,response);
+            	response.sendRedirect("Form/user/home.jsp");
             }
             else{
-            	response.getWriter().write("failure");
-            	RequestDispatcher rd = request.getRequestDispatcher("index.html");
-            	rd.forward(request,response);
+            	response.sendRedirect("/Form/registerForm.html");
             }
         %>
     </body>
