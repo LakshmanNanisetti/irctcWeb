@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
-  <filter>
+  <!-- <filter>
     <filter-name>Validate</filter-name>
     <filter-class>Validate</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>Validate</filter-name>
-    <url-pattern>/*</url-pattern>
-    <url-pattern>/trian</url-pattern>
-    <url-pattern>/update</url-pattern>
-  </filter-mapping>
+    <url-pattern>/user</url-pattern>
+  </filter-mapping> -->
+  <servlet>
+        <servlet-name>getTrains</servlet-name>
+        <servlet-class>src.GetTrains</servlet-class>
+    </servlet>
+  <servlet-mapping>
+        <servlet-name>getTrains</servlet-name>
+        <url-pattern>/Form/admin/getTrains</url-pattern>
+    </servlet-mapping>
 <welcome-file-list>
-<welcome-file>/home.jsp</welcome-file>
+<welcome-file>registerForm.html</welcome-file>
 </welcome-file-list>
 <security-constraint>
   <web-resource-collection>
+    <web-resource-name>irctc_user</web-resource-name>
+    <url-pattern>/user/*</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+    <role-name>user_irctc</role-name>
+  </auth-constraint>
+</security-constraint>
+
+
+<security-constraint>
+  <web-resource-collection>
     <web-resource-name>irctc_admin</web-resource-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/admin/*</url-pattern>
   </web-resource-collection>
   <auth-constraint>
     <role-name>admin_irctc</role-name>
-  </auth-constraint>
+   </auth-constraint>
 </security-constraint>
+<security-role>
+    <role-name>user_irctc</role-name>
+</security-role>
 <security-role>
     <role-name>admin_irctc</role-name>
 </security-role>
