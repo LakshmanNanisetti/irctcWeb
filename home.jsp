@@ -17,6 +17,12 @@
         <jsp:forward page="index.html" />
     <%} 
     %>--%>
+    <p>
+    <%=request.getUserPrincipal().getName().toString()%>
+    </p>
+    <%
+    session.setAttribute("mobile",request.getUserPrincipal().getName().toString());
+    %>
         <a href='book.jsp'><button>BOOK TICKET</button></a><br/>
         <a href='cancel.jsp'><button>CANCEL TICKET</button></a><br/>
         <a href='history.jsp'><button>BOOKED TICKET HISTORY</button></a><br/>
